@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=100%, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.typekit.net/cog8jlw.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/jquery-3.5.1.js"></script>
+
+    <title>MovieDB</title>
+    <header>
+      <h1>Welcome to MovieDB</h1>
+      <h2>All the movies in the world</h2>
+    </header>
+  </head>
+  <body>
+    <div class="center-items">
+      <div></div>
+      <div class="input-field">
+        <input type="text" id="inputvalue" placeholder="Warcraft" />
+        <span id="search-message"></span>
+      </div>
+      <div class="search-button">
+        <button id="search">Search</button>
+      </div>
+    </div>
+    <div class="result-list"></div>
+  </body>
+  <script src="js/script.js"></script>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&#10060;</span>
+      <h1 id="modal-title"></h1>
+      <a id="modal-link"></a>
+      <p id="modal-overview"></p>
+      <p id="modal-genres"></p>
+      <p id="modal-companies"></p>
+      <p id="modal-actors"></p>
+      <p id="modal-directors"></p>
+      <p id="modal-script"></p>
+      <p id="modal-execprod"></p>
+      <p id="modal-producers"></p>
+      <p id="modal-music"></p>
+    </div>
+  </div>
+</html>
