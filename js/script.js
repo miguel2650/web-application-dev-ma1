@@ -145,15 +145,22 @@ $(document).ready(() => {
           url: `https://api.themoviedb.org/3/person/${selectedId}/movie_credits?api_key=3edfa3f6e56c68eee27890cbd23d931f&language=en-US`,
           type: "GET",
         }).done((data) => {
-          $("#modal-directors").text(
-            `Movies: ${loopList(data.title)}, ${loopList(data.release_date)}, ${
-              data.charater
-            }`
-          );
+          // Loop over all movies and list title, release year and character
+          let loopedlist = "";
+          data.cast.forEach((item, index) => {
+            loopedlist += `${item.title} (${item.release_date}) as ${item.character}, `;
+            return loopedlist;
+          });
+          $("#modal-directors").text(`Movies: ${loopedlist}`);
         });
       });
     }
   });
+  /**
+   * ${loopList(data.cast.title)}, ${loopList(
+              data.cast.release_date
+            )}, ${loopList(data.cast.charater)}
+   */
 
   // Allows user to search for movies and persons in
   // a combined search field.
