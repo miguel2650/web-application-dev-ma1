@@ -31,6 +31,21 @@ header {
   justify-content: space-between;
 }
 
+.search-select button {
+  display: block;
+  border: 0.1em solid #1b2845;
+  background-color: #274060;
+  color: white;
+}
+
+.search-select {
+  margin-bottom: 0.2em;
+}
+
+.search-select button:not(:last-child) {
+  border-right: none;
+}
+
 .center-items div {
   display: flex;
   flex-basis: calc(100% / 3);
@@ -43,6 +58,7 @@ header {
 
 .search-button {
   justify-content: flex-end;
+  margin-top: 2.2em;
 }
 
 .input-field input {

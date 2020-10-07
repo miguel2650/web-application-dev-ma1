@@ -1,13 +1,23 @@
 $(document).ready(() => {
-  // Allows the user to seach by clicking the search button
+  let searchType = "multi";
+
+  // Allows the user to select a search type
+  $(`#${searchType}`).css("background-color", "#1b2845");
+  $(".search-select button").on("click", (e) => {
+    $(".search-select button").css("background-color", "#274060");
+    searchType = e.target.id;
+    $(`#${searchType}`).css("background-color", "#1b2845");
+  });
+
+  // Allows the user to search by clicking the search button
   $("#search").on("click", () => {
-    searchClicked();
+    searchClicked(searchType);
   });
 
   // Allows the user to press enter when submitting a search
   $("#inputvalue").keypress((e) => {
     if (e.keyCode === 13) {
-      searchClicked();
+      searchClicked(searchType);
     }
   });
 
@@ -164,49 +174,60 @@ $(document).ready(() => {
 
   // Allows user to search for movies and persons in
   // a combined search field.
-  const searchClicked = () => {
+  const searchClicked = (searchType) => {
     if ($("#inputvalue").val().length <= 0) {
       $("#search-message").text("Searching for nothing is pretty boring ...");
     } else {
       $("#search-message").text("Searching ...");
-      // API call gets all infomation related to users inputted value
-      // using multi search (person and movies).
-      $.ajax({
-        url: `https://api.themoviedb.org/3/search/multi?api_key=3edfa3f6e56c68eee27890cbd23d931f&language=en-US&page=1&include_adult=false&query=${$(
-          "#inputvalue"
-        ).val()}`,
-        type: "GET",
-      })
-        .done((data) => {
-          // Clear the current list items to avoid appending to old search.
-          $(".list-item").remove();
-          if (data.results.length <= 0) {
-            $("#search-message").text("No results");
-          } else {
-            $("#search-message").text("");
-            // Loop to add all items to the "result window".
-            data.results.forEach((item, index) => {
-              if (item.media_type === "movie") {
-                $(".result-list").append(
-                  `<div class="list-item" id=movie-${item.id}>
+      switch (searchType) {
+        case "multi":
+          // API call gets all infomation related to users inputted value
+          // using multi search (person and movies).
+          $.ajax({
+            url: `https://api.themoviedb.org/3/search/multi?api_key=3edfa3f6e56c68eee27890cbd23d931f&language=en-US&page=1&include_adult=false&query=${$(
+              "#inputvalue"
+            ).val()}`,
+            type: "GET",
+          })
+            .done((data) => {
+              // Clear the current list items to avoid appending to old search.
+              $(".list-item").remove();
+              if (data.results.length <= 0) {
+                $("#search-message").text("No results");
+              } else {
+                $("#search-message").text("");
+                // Loop to add all items to the "result window".
+                data.results.forEach((item, index) => {
+                  if (item.media_type === "movie") {
+                    $(".result-list").append(
+                      `<div class="list-item" id=movie-${item.id}>
                 <p>&#128250</p>
                     <h3>${item.title}, ${item.release_date}, ${item.original_language}</h3>
                     </div>`
-                );
-              } else if (item.media_type === "person") {
-                $(".result-list")
-                  .append(`<div class="list-item" id=person-${item.id}>
+                    );
+                  } else if (item.media_type === "person") {
+                    $(".result-list")
+                      .append(`<div class="list-item" id=person-${item.id}>
                 <p>&#129333</p>
                     <h3>${item.name}, ${item.known_for_department}</h3>
                     </div>`);
+                  }
+                });
+                console.log(data);
               }
+            })
+            .fail((error) => {
+              $("#search-message").text(error);
             });
-            console.log(data);
-          }
-        })
-        .fail((error) => {
-          $("#search-message").text(error);
-        });
+
+        case "person":
+          console.log("person test");
+
+        case "movie":
+          console.log("movie test");
+      }
     }
   };
+
+  const personSearch = () => {};
 });
